@@ -7,8 +7,8 @@ interface ListProps {
     directors: Director[];
 }
 
-export const List:React.FC<ListProps> = ({list,directors}) => {
-    console.log(directors,list)
+export const List: React.FC<ListProps> = ({ list, directors }) => {
+    console.log(directors, list)
     return (
         <div>
             <table>
@@ -24,7 +24,7 @@ export const List:React.FC<ListProps> = ({list,directors}) => {
                             <tr>
                                 <td>{project.name}</td>
                                 <td>{directors.find((director) => {
-                                    return director.id == project.personId
+                                    return director.id === project.personId
                                 })?.name}</td>
                             </tr>
                         ))

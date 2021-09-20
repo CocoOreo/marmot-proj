@@ -3,13 +3,12 @@ import { Director } from "types/director";
 import { Project } from "types/project";
 interface SearchPanelProps {
     directors: Director[];
-    params: Partial<Project>;
-    setParams: (params:any)=>void;
+    params: Partial<Pick<Project, "name" | "personId">>;
+    setParams: (params: any) => void;
 }
-export const SearchPanel:React.FC<SearchPanelProps> = ({ params, setParams, directors }) => {
+export const SearchPanel: React.FC<SearchPanelProps> = ({ params, setParams, directors }) => {
     // The first thing to create a react component
     // confirm what states we need
-
     return (<form>
         <div>
             <input type="text" value={params.name} onChange={(ev) => {
