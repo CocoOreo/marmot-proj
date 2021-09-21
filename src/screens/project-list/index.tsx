@@ -7,6 +7,7 @@ import { cleanObject } from "utils";
 import qs from 'qs';
 import { useMount } from "utils/use-mount";
 import { useDebounce } from "utils/use-debounce";
+import styled from "@emotion/styled";
 
 const baseUrl = process.env.REACT_APP_BASE_URL
 
@@ -14,7 +15,7 @@ export const ProjectListScreen = () => {
     const [params, setParams] = useState(
         {
             name: '',
-            personId: undefined,
+            personId: 0,
     })
     const debouncedParams = useDebounce(params)
     const [list, setList] = useState<Project[]>([])
@@ -23,7 +24,6 @@ export const ProjectListScreen = () => {
         fetch(`${baseUrl}/projects?${qs.stringify(cleanObject(debouncedParams))}`).then(async (res) => {
             if (res.ok) {
                 const data = await res.json()
-                console.log(data)
                 setList(data)
             }
         })
@@ -37,8 +37,15 @@ export const ProjectListScreen = () => {
     })
     return (
         <div>
-            <SearchPanel params={params} setParams={setParams} directors={directors} />
-            <List list={list || []} directors={directors || []} />
+            <Container>
+                <h3>Project List</h3>
+                <SearchPanel params={params} setParams={setParams} directors={directors} />
+                <List list={list || []} directors={directors || []} />
+            </Container>
         </div>
     )
 }
+
+const Container = styled.div`
+    padding: 3rem;
+`;

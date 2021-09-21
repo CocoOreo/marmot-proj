@@ -1,3 +1,5 @@
+import { Table } from "antd"
+import dayjs from "dayjs"
 import React from "react"
 import { Director } from "types/director"
 import { Project } from "types/project"
@@ -8,29 +10,41 @@ interface ListProps {
 }
 
 export const List: React.FC<ListProps> = ({ list, directors }) => {
-    console.log(directors, list)
     return (
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Director</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        list.map((project: { name: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; personId: any }) => (
-                            <tr>
-                                <td>{project.name}</td>
-                                <td>{directors.find((director) => {
-                                    return director.id === project.personId
-                                })?.name}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-        </div>
+        <Table pagination={false} rowKey={(record => record.id)} columns={[{
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: (a, b) => a.name.localeCompare(b.name),
+        },{
+            title: 'Organization',
+            dataIndex: 'organization',
+            key: 'organization',
+        }, {
+            title: 'Director',
+            key: 'personId',
+            render(value, project) {
+                // The param in render:
+                // current value in this row, current data in this row, current index
+                return (
+                    <span>
+                        {directors.find((director) => {
+                            return director.id === project.personId
+                        })?.name}
+                    </span>
+                )
+            }
+        },{
+            title: 'Created Time',
+            key: 'created',
+            render(value,project){
+                return(
+                    <span>
+                        {project.created? dayjs(project.created).format('YYYY-MM-DD') : undefined}
+                    </span>
+                )
+            }
+        }]} dataSource={list}>
+        </Table>
     )
 }
