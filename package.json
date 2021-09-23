@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "dotenv -e .env.development craco start",
-    "json-server": "json-server __mock_json_server__/db.json --watch --port 8888 --middleware __mock_json_server__/middleware.js",
+    "json-server": "json-server __mock_json_server__/db.json --watch --port 8888 --middlewares __mock_json_server__/middleware.js",
     "startp": "dotenv -e .env.production craco start",
     "build": "craco build",
     "test": "craco test",

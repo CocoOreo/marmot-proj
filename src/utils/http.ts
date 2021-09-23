@@ -1,12 +1,13 @@
 import { Config } from "types/config"
 import * as auth from "auth-provider"
 import qs from "qs"
+import { useAuth } from "context/auth-context"
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
 export const http = async (
     endpoint: string,
-    { data, token, headers, ...customConfig }: Config
+    { data, token, headers, ...customConfig }: Config = {}
 ) => {
     const config = {
         method: "GET",
@@ -27,14 +28,26 @@ export const http = async (
             if (response.status === 401) {
                 await auth.logout();
                 window.location.reload();
-                return Promise.reject({ message: "请重新登录" });
+                return Promise.reject({ message: "Please Log in" });
             }
             const data = await response.json();
             if (response.ok) {
                 return data;
             } else {
+                console.log("error occurred")
                 return Promise.reject(data);
             }
         }
     )
+}
+
+export const useHttp = () => {
+    const { user } = useAuth()
+    // Util Type
+    return (...[endpoint, config]:Parameters<typeof http>) => {
+        http(endpoint, {
+            ...config,
+            token: user?.token
+        })
+    }
 }

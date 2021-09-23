@@ -4,7 +4,9 @@ import { ReactComponent as SoftwareLogo } from 'assets/logo.svg';
 import styled from '@emotion/styled'
 import { Row } from 'components/lib';
 import { Dropdown, Menu } from 'antd';
+import { useAuth } from 'context/auth-context';
 export const AuthenticatedApp = () => {
+    const { user,logout } = useAuth()
     return (
         <div>
             <Container>
@@ -20,12 +22,12 @@ export const AuthenticatedApp = () => {
                             overlay={
                                 <Menu>
                                     <Menu.Item key={"logout"}>
-                                        <span>Log out</span>
+                                        <span onClick={logout}>Log out</span>
                                     </Menu.Item>
                                 </Menu>
                             }
                         >
-                            <span>Hi, User</span>
+                            <span>Hi, {user?.username}</span>
                         </Dropdown>
                     </HeaderRight>
                 </Header>
