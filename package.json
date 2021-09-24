@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@craco/craco": "^6.3.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
@@ -30,7 +31,7 @@
   },
   "scripts": {
     "start": "dotenv -e .env.development craco start",
-    "json-server": "json-server __mock_json_server__/db.json --watch --port 8888",
+    "json-server": "json-server __mock_json_server__/db.json --watch --port 8888 --middlewares __mock_json_server__/middleware.js",
     "startp": "dotenv -e .env.production craco start",
     "build": "craco build",
     "test": "craco test",

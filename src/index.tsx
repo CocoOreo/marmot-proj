@@ -6,10 +6,13 @@ import './App.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.less';
+import { AppProviders } from 'context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />,
+    <AppProviders>
+      <App />
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById('root')
 );

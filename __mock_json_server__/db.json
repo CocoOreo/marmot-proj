@@ -53,5 +53,11 @@
       "organization": "Order Organzation",
       "created": 1546900800000
     }
-  ]
+  ],
+  "me": {
+    "user": {
+      "username": "jack",
+      "token": "123"
+    }
+  }
 }
