@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
     const context = useContext(AuthContext)
     if (!context) {
-        throw new Error('useAutn can only be used in the scope of AuthProvider')
+        throw new Error('UseAutn can only be used in the scope of AuthProvider')
     }
     return context;
 }
