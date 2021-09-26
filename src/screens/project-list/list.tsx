@@ -7,11 +7,12 @@ import { Project } from "types/project"
 interface ListProps {
     list: Project[];
     directors: Director[];
+    isLoading:boolean;
 }
 
-export const List: React.FC<ListProps> = ({ list, directors }) => {
+export const List: React.FC<ListProps> = ({ list, directors, isLoading }) => {
     return (
-        <Table pagination={false} rowKey={(record => record.id)} columns={[{
+        <Table loading={isLoading} pagination={false} rowKey={(record => record.id)} columns={[{
             title: 'Name',
             dataIndex: 'name',
             key: 'name',

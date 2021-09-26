@@ -1,7 +1,7 @@
 import { UserOutlined, KeyOutlined } from "@ant-design/icons"
 import { Form, Input, Divider, Button } from "antd"
 import { useAuth } from "context/auth-context"
-import React, { FormEvent } from "react"
+import React from "react"
 
 export const RegisterScreen = () => {
     const { register } = useAuth()
