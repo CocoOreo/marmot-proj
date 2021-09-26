@@ -4,43 +4,49 @@ import { Project } from "types/project";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
 import { cleanObject } from "utils";
-import qs from 'qs';
 import { useMount } from "utils/use-mount";
 import { useDebounce } from "utils/use-debounce";
 import styled from "@emotion/styled";
+import { useAsync } from "utils/use-async";
+import { useHttp } from "utils/http";
 
-const baseUrl = process.env.REACT_APP_BASE_URL
 
 export const ProjectListScreen = () => {
     const [params, setParams] = useState(
         {
             name: '',
             personId: 0,
-    })
+        })
+    const client = useHttp()
+    const { run:getList, data: list, isLoading:isListLoading } = useAsync<Project[]>()
+    const { run:getDirectors, data: directors, isLoading:isDirectorLoading } = useAsync<Director[]>()
     const debouncedParams = useDebounce(params)
-    const [list, setList] = useState<Project[]>([])
-    const [directors, setDiectors] = useState<Director[]>([])
     useEffect(() => {
-        fetch(`${baseUrl}/projects?${qs.stringify(cleanObject(debouncedParams))}`).then(async (res) => {
-            if (res.ok) {
-                const data = await res.json()
-                setList(data)
-            }
-        })
+        getList(client('projects', { data: cleanObject(debouncedParams) }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedParams])
+    // useEffect(() => {
+    //     fetch(`${baseUrl}/projects?${qs.stringify(cleanObject(debouncedParams))}`).then(async (res) => {
+    //         if (res.ok) {
+    //             const data = await res.json()
+    //             setList(data)
+    //         }
+    //     })
+    // }, [debouncedParams])
     useMount(() => {
-        fetch(`${baseUrl}/users`).then(async (res) => {
-            if (res.ok) {
-                setDiectors(await res.json())
-            }
-        })
+        getDirectors(client('users'))
+        // fetch(`${baseUrl}/users`).then(async (res) => {
+        //     if (res.ok) {
+        //         setDiectors(await res.json())
+        //     }
+        // })
     })
     return (
         <div>
             <Container>
                 <h3>Project List</h3>
-                <SearchPanel params={params} setParams={setParams} directors={directors} />
-                <List list={list || []} directors={directors || []} />
+                <SearchPanel params={params} setParams={setParams} directors={directors || []} />
+                <List isLoading={isListLoading || isDirectorLoading} list={list || []} directors={directors || []} />
             </Container>
         </div>
     )
