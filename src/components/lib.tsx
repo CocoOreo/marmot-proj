@@ -5,7 +5,10 @@ import React from "react";
 export const FullPageErrorFallback = ({ error }: { error: Error | null }) => {
     return (
         <div>
-            <Alert message={error} type="error" />
+            {/* read error's message properity */}
+            <Alert message={`Error: ${error?.message}`} type="error" style={{
+                margin: "10rem 2rem",
+            }} />
         </div>
     )
 }

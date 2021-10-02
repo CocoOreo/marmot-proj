@@ -15,7 +15,6 @@ export class ErrorBoundary extends React.Component<
   }
 
   render() {
-    console.log("boundary works")
     const { error } = this.state;
     const { fallbackRender, children } = this.props;
     if (error) {
