@@ -5,32 +5,12 @@ import styled from '@emotion/styled'
 import { Row } from 'components/lib';
 import { Dropdown, Menu } from 'antd';
 import { useAuth } from 'context/auth-context';
+
 export const AuthenticatedApp = () => {
-    const { user,logout } = useAuth()
     return (
         <div>
             <Container>
-                <Header between={true}>
-                    <HeaderLeft gap={true} between={true}>
-                        <SoftwareLogo width={'3rem'}></SoftwareLogo>
-                        <h3>
-                            Marmot Project
-                        </h3>
-                    </HeaderLeft>
-                    <HeaderRight>
-                        <Dropdown
-                            overlay={
-                                <Menu>
-                                    <Menu.Item key={"logout"}>
-                                        <span onClick={logout}>Log out</span>
-                                    </Menu.Item>
-                                </Menu>
-                            }
-                        >
-                            <span>Hi, {user?.username}</span>
-                        </Dropdown>
-                    </HeaderRight>
-                </Header>
+                <PageHeader />
                 <Main>
                     <ProjectListScreen />
                 </Main>
@@ -54,6 +34,32 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
     
 `
+const PageHeader = () => {
+    const { user, logout } = useAuth()
+    return (
+        <Header between={true}>
+            <HeaderLeft gap={true} between={true}>
+                <SoftwareLogo width={'3rem'}></SoftwareLogo>
+                <h3>
+                    Marmot Project
+                </h3>
+            </HeaderLeft>
+            <HeaderRight>
+                <Dropdown
+                    overlay={
+                        <Menu>
+                            <Menu.Item key={"logout"}>
+                                <span onClick={logout}>Log out</span>
+                            </Menu.Item>
+                        </Menu>
+                    }
+                >
+                    <span>Hi, {user?.username}</span>
+                </Dropdown>
+            </HeaderRight>
+        </Header>
+    )
+}
 
 const Main = styled.main`
     height: calc(100vh - 6rem);
