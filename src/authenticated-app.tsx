@@ -1,10 +1,13 @@
 import React from 'react';
 import { ProjectListScreen } from 'screens/project-list';
+import { ProjectScreen } from 'screens/project';
 import { ReactComponent as SoftwareLogo } from 'assets/logo.svg';
 import styled from '@emotion/styled'
 import { Row } from 'components/lib';
 import { Dropdown, Menu } from 'antd';
 import { useAuth } from 'context/auth-context';
+import { Routes, Navigate, Route } from 'react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 export const AuthenticatedApp = () => {
     return (
@@ -12,7 +15,13 @@ export const AuthenticatedApp = () => {
             <Container>
                 <PageHeader />
                 <Main>
-                    <ProjectListScreen />
+                    <Router>
+                        <Routes>
+                            <Route path={'/projects'} element={<ProjectListScreen />}></Route>
+                            <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
+                            <Navigate to={"/projects"} />
+                        </Routes>
+                    </Router>
                 </Main>
             </Container>
         </div>

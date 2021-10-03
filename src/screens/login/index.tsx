@@ -24,7 +24,7 @@ export const LoginScreen = () => {
             <Form.Item
                 name="password"
                 rules={[{ required: true, message: 'Please input your Password!' }]}>
-                <Input.Password placeholder={"password"} prefix={<KeyOutlined />} allowClear={true}></Input.Password>
+                <Input.Password placeholder={"Password"} prefix={<KeyOutlined />} allowClear={true}></Input.Password>
             </Form.Item>
             <Divider />
             <Form.Item>

@@ -1,6 +1,7 @@
 import { Table } from "antd"
 import dayjs from "dayjs"
 import React from "react"
+import { Link } from "react-router-dom"
 import { Director } from "types/director"
 import { Project } from "types/project"
 
@@ -14,9 +15,13 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading }) => {
     return (
         <Table loading={isLoading} pagination={false} rowKey={(record => record.id)} columns={[{
             title: 'Name',
-            dataIndex: 'name',
             key: 'name',
             sorter: (a, b) => a.name.localeCompare(b.name),
+            render(value, project) {
+                return (
+                    <Link to={`${project.id}`}>{project.name}</Link>
+                )
+            }
         },{
             title: 'Organization',
             dataIndex: 'organization',
