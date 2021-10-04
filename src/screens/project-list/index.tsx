@@ -25,21 +25,9 @@ export const ProjectListScreen = () => {
         getList(client('projects', { data: cleanObject(debouncedParams) }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedParams])
-    // useEffect(() => {
-    //     fetch(`${baseUrl}/projects?${qs.stringify(cleanObject(debouncedParams))}`).then(async (res) => {
-    //         if (res.ok) {
-    //             const data = await res.json()
-    //             setList(data)
-    //         }
-    //     })
-    // }, [debouncedParams])
+    
     useMount(() => {
         getDirectors(client('users'))
-        // fetch(`${baseUrl}/users`).then(async (res) => {
-        //     if (res.ok) {
-        //         setDiectors(await res.json())
-        //     }
-        // })
     })
     return (
         <div>
