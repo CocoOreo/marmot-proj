@@ -1,15 +1,27 @@
 import styled from "@emotion/styled";
-import { Alert } from 'antd';
+import { Alert, Spin } from 'antd';
 import React from "react";
+
+const FullPage = styled.div`
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 export const FullPageErrorFallback = ({ error }: { error: Error | null }) => {
     return (
-        <div>
+        <FullPage>
             {/* read error's message properity */}
-            <Alert message={`Error: ${error?.message}`} type="error" style={{
-                margin: "10rem 2rem",
-            }} />
-        </div>
+            <Alert message={`Error: ${error?.message}`} type="error"/>
+        </FullPage>
+    )
+}
+export const FullPageLoading = () => {
+    return(
+        <FullPage>
+            <Spin size='large' />
+        </FullPage>
     )
 }
 
@@ -29,4 +41,5 @@ export const Row = styled.div<{
         margin-right: ${props => typeof props.gap === 'number' ? props.gap + 'rem' : props.gap ? '2rem' : undefined};
     }
 `
+
 
