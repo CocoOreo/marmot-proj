@@ -9,14 +9,9 @@ import { useProjectSearchParams } from "./util";
 
 
 export const ProjectListScreen = () => {
-    // const [params, setParams] = useState(
-    //     {
-    //         name: '',
-    //         personId: 0,
-    //     })
     const [params, setParams] = useProjectSearchParams()
     const debouncedParams = useDebounce(params, 200)
-    const { data: list, isLoading: isListLoading } = useProjects(debouncedParams)
+    const { data: list, isLoading: isListLoading, retry } = useProjects(debouncedParams)
     const { data: directors, isLoading: isDirectorLoading } = useDirectors()
 
     return (
@@ -24,7 +19,7 @@ export const ProjectListScreen = () => {
             <Container>
                 <h3>Project List</h3>
                 <SearchPanel params={params} setParams={setParams} directors={directors || []} />
-                <List isLoading={isListLoading || isDirectorLoading} list={list || []} directors={directors || []} />
+                <List refresh={retry} isLoading={isListLoading || isDirectorLoading} list={list || []} directors={directors || []} />
             </Container>
         </div>
     )

@@ -17,6 +17,10 @@ export const useAsync = <D>(initialStat?: State<D>) => {
         ...defaultInitialStat,
         ...initialStat
     })
+    // Lazy initialization 
+    // To do this, you can pass an init function as the third argument. The initial state will be set to init(initialArg).
+    const [retry, setRetry] = useState(() => () => { })
+
     const setData = (data: D) => {
         setState({
             data,
@@ -31,15 +35,20 @@ export const useAsync = <D>(initialStat?: State<D>) => {
             stat: 'error'
         })
     }
-    const run = (promise: Promise<D>) => {
+    const run = (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
         if (!promise || !promise.then) {
             throw new Error("run can only receive a promise")
         }
+        setRetry(() => () => {
+            if (runConfig?.retry) {
+                run(runConfig?.retry(), runConfig)
+            }
+        })
         setState({ ...state, stat: "loading" })
-        return promise.then((data)=>{
+        return promise.then((data) => {
             setData(data)
             return data
-        }).catch((error) =>{
+        }).catch((error) => {
             setError(error)
             return error
         })
@@ -51,6 +60,7 @@ export const useAsync = <D>(initialStat?: State<D>) => {
         isError: state.stat === 'error',
         isSuccess: state.stat === 'success',
         run,
+        retry,
         setData,
         setError,
         ...state

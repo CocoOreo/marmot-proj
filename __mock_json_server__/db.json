@@ -23,35 +23,40 @@
       "name": "Order Management",
       "personId": 1,
       "organization": "Order Organization",
-      "created": 1604989757139
+      "created": 1604989757139,
+      "pin": false
     },
     {
       "id": 2,
       "name": "E-Commerce",
       "personId": 2,
       "organization": "E-Commerce Organzation",
-      "created": 1604989757139
+      "created": 1604989757139,
+      "pin": true
     },
     {
       "id": 3,
       "name": "Material Management",
       "personId": 2,
       "organization": "Material Organzation",
-      "created": 1546300800000
+      "created": 1546300800000,
+      "pin": true
     },
     {
       "id": 4,
       "name": "Business",
       "personId": 3,
       "organization": "Bussiness Organzation",
-      "created": 1604980000011
+      "created": 1604980000011,
+      "pin": true
     },
     {
       "id": 5,
       "name": "Path Management",
       "personId": 4,
       "organization": "Order Organzation",
-      "created": 1546900800000
+      "created": 1546900800000,
+      "pin": true
     }
   ],
   "me": {

@@ -19,14 +19,14 @@ export const IdSelect = (props: IdSelectProps) => {
             {...restProps}
         >
             {
-                defaultOptionName ? <Select.Option value={0}>
+                defaultOptionName ? <Select.Option key={0} value={0}>
                     {defaultOptionName}
                 </Select.Option> : null
             }
             {
                 options?.map(option => {
                     return (
-                        <Select.Option value={option.id}>
+                        <Select.Option key={option.id} value={option.id}>
                             {option.name}
                         </Select.Option>
                     )
