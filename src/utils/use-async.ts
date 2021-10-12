@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
+import { useMountedRef } from "./use-mounted-ref"
 
 interface State<D> {
     data: D | null;
@@ -20,39 +21,51 @@ export const useAsync = <D>(initialStat?: State<D>) => {
     // Lazy initialization 
     // To do this, you can pass an init function as the third argument. The initial state will be set to init(initialArg).
     const [retry, setRetry] = useState(() => () => { })
+    const mountedRef = useMountedRef()
 
-    const setData = (data: D) => {
-        setState({
-            data,
-            stat: "success",
-            error: null
-        })
-    }
-    const setError = (error: Error) => {
-        setState({
-            error,
-            data: null,
-            stat: 'error'
-        })
-    }
-    const run = (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
-        if (!promise || !promise.then) {
-            throw new Error("run can only receive a promise")
-        }
-        setRetry(() => () => {
-            if (runConfig?.retry) {
-                run(runConfig?.retry(), runConfig)
+    const setData = useCallback(
+        (data: D) => {
+            setState({
+                data,
+                stat: "success",
+                error: null
+            })
+        }, []
+    )
+    
+    const setError = useCallback(
+        (error: Error) => {
+            setState({
+                error,
+                data: null,
+                stat: 'error'
+            })
+        }, []
+    )
+
+    const run = useCallback(
+        (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
+            if (!promise || !promise.then) {
+                throw new Error("run can only receive a promise")
             }
-        })
-        setState({ ...state, stat: "loading" })
-        return promise.then((data) => {
-            setData(data)
-            return data
-        }).catch((error) => {
-            setError(error)
-            return error
-        })
-    }
+            setRetry(() => () => {
+                if (runConfig?.retry) {
+                    run(runConfig?.retry(), runConfig)
+                }
+            })
+            setState(pre => ({ ...pre, stat: "loading" }))
+            return promise.then((data) => {
+                if (mountedRef.current) {
+                    setData(data)
+                }
+                return data
+            }).catch((error) => {
+                setError(error)
+                return Promise.reject(error)
+            })
+        },
+        [mountedRef, setData, setError],
+    )
 
     return {
         isIdle: state.stat === 'idle',
