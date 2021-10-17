@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Alert, Spin } from 'antd';
+import { Alert, Button, Spin } from 'antd';
 import React from "react";
 
 const FullPage = styled.div`
@@ -41,5 +41,7 @@ export const Row = styled.div<{
         margin-right: ${props => typeof props.gap === 'number' ? props.gap + 'rem' : props.gap ? '2rem' : undefined};
     }
 `
-
+export const ButtonWithNoPadding = styled(Button)`
+    padding: 0;
+`
 

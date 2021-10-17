@@ -1,4 +1,5 @@
-import { Table } from "antd"
+import { Dropdown, Menu, Table } from "antd"
+import { ButtonWithNoPadding } from "components/lib"
 import { Pin } from "components/pin"
 import dayjs from "dayjs"
 import React from "react"
@@ -11,10 +12,11 @@ interface ListProps {
     list: Project[];
     directors: Director[];
     isLoading: boolean;
-    refresh?: () => void
+    refresh?: () => void;
+    setProjectModalOpen: (isOpen:boolean) => void;
 }
 
-export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh }) => {
+export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh, setProjectModalOpen }) => {
     const { mutate } = useEditProject()
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(refresh)
     return (
@@ -69,6 +71,21 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh 
                             <span>
                                 {project.created ? dayjs(project.created).format('YYYY-MM-DD') : undefined}
                             </span>
+                        )
+                    }
+                },
+                {
+                    render() {
+                        return (
+                            <Dropdown overlay={
+                                <Menu>
+                                    <Menu.Item>
+                                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>Edit</ButtonWithNoPadding>
+                                    </Menu.Item>
+                                </Menu>
+                            }>
+                                <ButtonWithNoPadding type={'link'}>...</ButtonWithNoPadding>
+                            </Dropdown>
                         )
                     }
                 }]} dataSource={list}>

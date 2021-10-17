@@ -24,7 +24,7 @@
       "personId": 1,
       "organization": "Order Organization",
       "created": 1604989757139,
-      "pin": false
+      "pin": true
     },
     {
       "id": 2,
@@ -48,7 +48,7 @@
       "personId": 3,
       "organization": "Bussiness Organzation",
       "created": 1604980000011,
-      "pin": false
+      "pin": true
     },
     {
       "id": 5,
@@ -56,7 +56,7 @@
       "personId": 4,
       "organization": "Order Organzation",
       "created": 1546900800000,
-      "pin": false
+      "pin": true
     }
   ],
   "me": {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ProjectListScreen } from 'screens/project-list';
 import { ProjectScreen } from 'screens/project';
 import { ReactComponent as SoftwareLogo } from 'assets/logo.svg';
@@ -9,21 +9,26 @@ import { useAuth } from 'context/auth-context';
 import { Routes, Navigate, Route } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { resetRoute } from 'utils';
+import { ProjectModal } from 'screens/project-list/project-modal';
+import { ProjectPopover } from 'components/project-popover';
 
 export const AuthenticatedApp = () => {
+    const [projectModalOpen, setProjectModalOpen] = useState(false)
     return (
         <div>
             <Container>
-                <PageHeader />
+                {/* <Button onClick={()=> setProjectModalOpen(true)}>Open </Button> */}
+                <PageHeader setProjectModalOpen={setProjectModalOpen} />
                 <Main>
                     <Router>
                         <Routes>
-                            <Route path={'/projects'} element={<ProjectListScreen />}></Route>
+                            <Route path={'/projects'} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen} />}></Route>
                             <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
                             <Navigate to={"/projects"} />
                         </Routes>
                     </Router>
                 </Main>
+                <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)}></ProjectModal>
             </Container>
         </div>
     )
@@ -46,32 +51,40 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
     
 `
-const PageHeader = () => {
-    const { user, logout } = useAuth()
+const PageHeader = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
     return (
         <Header between={true}>
             <HeaderLeft gap={true} between={true}>
-                <Button type={'link'} onClick={resetRoute} style={{ width:'100%', display: 'flex', justifyContent: "between", padding:"0" }}>
-                    <SoftwareLogo width={'4rem'} height={'4rem'}></SoftwareLogo>
-                    <h2 style={{margin:'0 1rem'}} >
-                        Marmot Project
-                    </h2>
+                <Button type={'link'} onClick={resetRoute} style={{ width: '100%', display: 'flex', justifyContent: "between", alignItems: "center", padding: "0" }}>
+                    <SoftwareLogo width={'4rem'} height={'100%'}></SoftwareLogo>
+                    <h3 style={{ margin: '0 1rem' }} >
+                        Marmot
+                    </h3>
                 </Button>
+                <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+                <span>User</span>
             </HeaderLeft>
             <HeaderRight>
-                <Dropdown
-                    overlay={
-                        <Menu>
-                            <Menu.Item key={"logout"}>
-                                <span onClick={logout}>Log out</span>
-                            </Menu.Item>
-                        </Menu>
-                    }
-                >
-                    <Button type={'link'} size={'large'}>Hi, {user?.username}</Button>
-                </Dropdown>
+                <User />
             </HeaderRight>
         </Header>
+    )
+}
+
+const User = () => {
+    const { user, logout } = useAuth()
+    return (
+        <Dropdown
+            overlay={
+                <Menu>
+                    <Menu.Item key={"logout"}>
+                        <span onClick={logout}>Log out</span>
+                    </Menu.Item>
+                </Menu>
+            }
+        >
+            <Button type={'link'} size={'large'}>Hi, {user?.username}</Button>
+        </Dropdown>
     )
 }
 
