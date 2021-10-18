@@ -3,7 +3,7 @@ import { ProjectListScreen } from 'screens/project-list';
 import { ProjectScreen } from 'screens/project';
 import { ReactComponent as SoftwareLogo } from 'assets/logo.svg';
 import styled from '@emotion/styled'
-import { Row } from 'components/lib';
+import { ButtonWithNoPadding, Row } from 'components/lib';
 import { Button, Dropdown, Menu } from 'antd';
 import { useAuth } from 'context/auth-context';
 import { Routes, Navigate, Route } from 'react-router';
@@ -18,7 +18,13 @@ export const AuthenticatedApp = () => {
         <div>
             <Container>
                 {/* <Button onClick={()=> setProjectModalOpen(true)}>Open </Button> */}
-                <PageHeader setProjectModalOpen={setProjectModalOpen} />
+                <PageHeader
+                    projectButton={
+                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>
+                            Create Project
+                        </ButtonWithNoPadding>
+                    }
+                />
                 <Main>
                     <Router>
                         <Routes>
@@ -51,7 +57,7 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
     
 `
-const PageHeader = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
+const PageHeader = (props: { projectButton: JSX.Element }) => {
     return (
         <Header between={true}>
             <HeaderLeft gap={true} between={true}>
@@ -61,7 +67,7 @@ const PageHeader = (props: { setProjectModalOpen: (isOpen: boolean) => void }) =
                         Marmot
                     </h3>
                 </Button>
-                <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+                <ProjectPopover {...props} />
                 <span>User</span>
             </HeaderLeft>
             <HeaderRight>
