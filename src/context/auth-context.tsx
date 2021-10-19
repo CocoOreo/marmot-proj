@@ -1,8 +1,10 @@
-import React, { ReactNode, useContext, useState } from "react";
+import React, { ReactNode, useContext } from "react";
 import * as auth from 'auth-provider'
 import { User } from "types/user";
 import { http } from "utils/http";
 import { useMount } from "utils/use-mount";
+import { useAsync } from "utils/use-async";
+import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 interface AuthForm {
     username: string;
     password: string;
@@ -26,7 +28,7 @@ const bootstrapUser = async () => {
 }
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null)
+    const { data: user, setData: setUser, run, error, isError, isIdle, isLoading, } = useAsync<User | null>()
     const login = (form: AuthForm) => {
         return auth.login(form).then(user => setUser(user))
     }
@@ -38,8 +40,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     useMount(() => {
-        bootstrapUser().then(setUser)
+        run(bootstrapUser())
     })
+    if (isIdle || isLoading) {
+        return (<FullPageLoading />)
+    }
+
+    if (isError) {
+        return (<FullPageErrorFallback error={error} />)
+    }
 
     return (
         <AuthContext.Provider children={children} value={{ login, register, logout, user }} />

@@ -1,40 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { Director } from "types/director";
-import { Project } from "types/project";
+import React from "react";
 import { List } from "./list";
 import { SearchPanel } from "./search-panel";
-import { cleanObject } from "utils";
-import { useMount } from "utils/use-mount";
 import { useDebounce } from "utils/use-debounce";
 import styled from "@emotion/styled";
-import { useAsync } from "utils/use-async";
-import { useHttp } from "utils/http";
+import { useProjects } from "utils/project";
+import { useDirectors } from "utils/director";
+import { useProjectSearchParams } from "./util";
+import { Row } from "components/lib";
 
 
-export const ProjectListScreen = () => {
-    const [params, setParams] = useState(
-        {
-            name: '',
-            personId: 0,
-        })
-    const client = useHttp()
-    const { run:getList, data: list, isLoading:isListLoading } = useAsync<Project[]>()
-    const { run:getDirectors, data: directors, isLoading:isDirectorLoading } = useAsync<Director[]>()
-    const debouncedParams = useDebounce(params)
-    useEffect(() => {
-        getList(client('projects', { data: cleanObject(debouncedParams) }))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedParams])
-    
-    useMount(() => {
-        getDirectors(client('users'))
-    })
+export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
+    const [params, setParams] = useProjectSearchParams()
+    const debouncedParams = useDebounce(params, 200)
+    const { data: list, isLoading: isListLoading, retry } = useProjects(debouncedParams)
+    const { data: directors, isLoading: isDirectorLoading } = useDirectors()
+
     return (
         <div>
             <Container>
-                <h3>Project List</h3>
+                <Row between={true} style={{ margin: '1rem 0' }}>
+                    <h3>Project List</h3>
+                    {props.projectButton}
+                </Row>
                 <SearchPanel params={params} setParams={setParams} directors={directors || []} />
-                <List isLoading={isListLoading || isDirectorLoading} list={list || []} directors={directors || []} />
+                <List refresh={retry}
+                    isLoading={isListLoading || isDirectorLoading}
+                    list={list || []}
+                    directors={directors || []} 
+                    projectButton={props.projectButton}
+                    />
             </Container>
         </div>
     )
