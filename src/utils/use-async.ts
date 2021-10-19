@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useReducer, useState } from "react"
 import { useMountedRef } from "./use-mounted-ref"
 
 interface State<D> {
@@ -13,34 +13,44 @@ const defaultInitialStat: State<null> = {
     data: null
 }
 
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+    const mountedRef = useMountedRef()
+    return useCallback((...args: T[]) => {
+        return (mountedRef.current ? dispatch(...args) : void 0)
+    }, [dispatch, mountedRef])
+}
+
+
 export const useAsync = <D>(initialStat?: State<D>) => {
-    const [state, setState] = useState<State<D>>({
-        ...defaultInitialStat,
-        ...initialStat
-    })
+    const [state, dispatch] = useReducer(
+        (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }),
+        {
+            ...defaultInitialStat,
+            ...initialStat
+        })
     // Lazy initialization 
     // To do this, you can pass an init function as the third argument. The initial state will be set to init(initialArg).
     const [retry, setRetry] = useState(() => () => { })
-    const mountedRef = useMountedRef()
+    const safeDispatch = useSafeDispatch(dispatch)
 
     const setData = useCallback(
         (data: D) => {
-            setState({
+            safeDispatch({
                 data,
                 stat: "success",
                 error: null
             })
-        }, []
+        }, [safeDispatch]
     )
-    
+
     const setError = useCallback(
         (error: Error) => {
-            setState({
+            safeDispatch({
                 error,
                 data: null,
                 stat: 'error'
             })
-        }, []
+        }, [safeDispatch]
     )
 
     const run = useCallback(
@@ -53,18 +63,16 @@ export const useAsync = <D>(initialStat?: State<D>) => {
                     run(runConfig?.retry(), runConfig)
                 }
             })
-            setState(pre => ({ ...pre, stat: "loading" }))
+            safeDispatch({ stat: "loading" })
             return promise.then((data) => {
-                if (mountedRef.current) {
                     setData(data)
-                }
                 return data
             }).catch((error) => {
                 setError(error)
                 return Promise.reject(error)
             })
         },
-        [mountedRef, setData, setError],
+        [safeDispatch, setData, setError],
     )
 
     return {

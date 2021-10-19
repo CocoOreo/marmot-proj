@@ -28,8 +28,18 @@ export const AuthenticatedApp = () => {
                 <Main>
                     <Router>
                         <Routes>
-                            <Route path={'/projects'} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen} />}></Route>
-                            <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
+                            <Route path={'/projects'}
+                                element={<ProjectListScreen
+                                    projectButton={
+                                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>
+                                            Create Project
+                                        </ButtonWithNoPadding>
+                                    }
+                                />}>
+                            </Route>
+                            <Route path={'/projects/:projectId/*'}
+                                element={<ProjectScreen />}>
+                            </Route>
                             <Navigate to={"/projects"} />
                         </Routes>
                     </Router>

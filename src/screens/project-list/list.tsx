@@ -13,10 +13,10 @@ interface ListProps {
     directors: Director[];
     isLoading: boolean;
     refresh?: () => void;
-    setProjectModalOpen: (isOpen:boolean) => void;
+    projectButton:JSX.Element;
 }
 
-export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh, setProjectModalOpen }) => {
+export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh, projectButton }) => {
     const { mutate } = useEditProject()
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(refresh)
     return (
@@ -80,7 +80,7 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh,
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item>
-                                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>Edit</ButtonWithNoPadding>
+                                        {projectButton}
                                     </Menu.Item>
                                 </Menu>
                             }>
