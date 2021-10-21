@@ -13,10 +13,9 @@ interface ListProps {
     directors: Director[];
     isLoading: boolean;
     refresh?: () => void;
-    projectButton:JSX.Element;
 }
 
-export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh, projectButton }) => {
+export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh }) => {
     const { mutate } = useEditProject()
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(refresh)
     return (
@@ -80,7 +79,9 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh,
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item>
-                                        {projectButton}
+                                        <ButtonWithNoPadding>
+                                            Edit
+                                        </ButtonWithNoPadding>
                                     </Menu.Item>
                                 </Menu>
                             }>

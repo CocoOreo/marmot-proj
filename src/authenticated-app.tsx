@@ -13,17 +13,12 @@ import { ProjectModal } from 'screens/project-list/project-modal';
 import { ProjectPopover } from 'components/project-popover';
 
 export const AuthenticatedApp = () => {
-    const [projectModalOpen, setProjectModalOpen] = useState(false)
+
     return (
         <div>
             <Container>
                 {/* <Button onClick={()=> setProjectModalOpen(true)}>Open </Button> */}
                 <PageHeader
-                    projectButton={
-                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>
-                            Create Project
-                        </ButtonWithNoPadding>
-                    }
                 />
                 <Main>
                     <Router>
@@ -67,7 +62,7 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
     
 `
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
     return (
         <Header between={true}>
             <HeaderLeft gap={true} between={true}>
@@ -77,7 +72,7 @@ const PageHeader = (props: { projectButton: JSX.Element }) => {
                         Marmot
                     </h3>
                 </Button>
-                <ProjectPopover {...props} />
+                <ProjectPopover />
                 <span>User</span>
             </HeaderLeft>
             <HeaderRight>
