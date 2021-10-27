@@ -3,10 +3,12 @@ import { ButtonWithNoPadding } from "components/lib"
 import { Pin } from "components/pin"
 import dayjs from "dayjs"
 import React from "react"
+import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import { Director } from "types/director"
 import { Project } from "types/project"
 import { useEditProject } from "utils/project"
+import { projectListActions } from "./project-list.slice"
 
 interface ListProps {
     list: Project[];
@@ -17,6 +19,7 @@ interface ListProps {
 
 export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh }) => {
     const { mutate } = useEditProject()
+    const dispatch = useDispatch()
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(refresh)
     return (
         <Table loading={isLoading}
@@ -78,8 +81,12 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh 
                         return (
                             <Dropdown overlay={
                                 <Menu>
-                                    <Menu.Item>
-                                        <ButtonWithNoPadding>
+                                    <Menu.Item key={'Edit'}>
+                                        <ButtonWithNoPadding
+                                            onClick={() => {
+                                                dispatch(projectListActions.openProjectModal())
+                                            }}
+                                            type={'link'}>
                                             Edit
                                         </ButtonWithNoPadding>
                                     </Menu.Item>

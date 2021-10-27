@@ -12,7 +12,7 @@ import { projectListActions } from "./project-list.slice";
 
 
 
-export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
+export const ProjectListScreen = () => {
     const [params, setParams] = useProjectSearchParams()
     const debouncedParams = useDebounce(params, 200)
     const { data: list, isLoading: isListLoading, retry } = useProjects(debouncedParams)

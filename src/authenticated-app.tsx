@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ProjectListScreen } from 'screens/project-list';
 import { ProjectScreen } from 'screens/project';
 import { ReactComponent as SoftwareLogo } from 'assets/logo.svg';
 import styled from '@emotion/styled'
-import { ButtonWithNoPadding, Row } from 'components/lib';
+import { Row } from 'components/lib';
 import { Button, Dropdown, Menu } from 'antd';
 import { useAuth } from 'context/auth-context';
 import { Routes, Navigate, Route } from 'react-router';
@@ -24,13 +24,7 @@ export const AuthenticatedApp = () => {
                     <Router>
                         <Routes>
                             <Route path={'/projects'}
-                                element={<ProjectListScreen
-                                    projectButton={
-                                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>
-                                            Create Project
-                                        </ButtonWithNoPadding>
-                                    }
-                                />}>
+                                element={<ProjectListScreen/>}>
                             </Route>
                             <Route path={'/projects/:projectId/*'}
                                 element={<ProjectScreen />}>
@@ -39,7 +33,7 @@ export const AuthenticatedApp = () => {
                         </Routes>
                     </Router>
                 </Main>
-                <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)}></ProjectModal>
+                <ProjectModal></ProjectModal>
             </Container>
         </div>
     )
