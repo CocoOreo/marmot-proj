@@ -7,17 +7,18 @@ import { Link } from "react-router-dom"
 import { Director } from "types/director"
 import { Project } from "types/project"
 import { useEditProject } from "utils/project"
+import { useProjectModal } from "./util"
 
 interface ListProps {
     list: Project[];
     directors: Director[];
     isLoading: boolean;
     refresh?: () => void;
-    projectButton:JSX.Element;
 }
 
-export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh, projectButton }) => {
+export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh}) => {
     const { mutate } = useEditProject()
+    const { open } = useProjectModal() 
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(refresh)
     return (
         <Table loading={isLoading}
@@ -80,7 +81,7 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh,
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item>
-                                        {projectButton}
+                                        <ButtonWithNoPadding onClick={()=> open()} type={'link'}>Edit</ButtonWithNoPadding>
                                     </Menu.Item>
                                 </Menu>
                             }>

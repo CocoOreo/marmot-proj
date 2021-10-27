@@ -5,12 +5,14 @@ import { useDebounce } from "utils/use-debounce";
 import styled from "@emotion/styled";
 import { useProjects } from "utils/project";
 import { useDirectors } from "utils/director";
-import { useProjectSearchParams } from "./util";
+import { useProjectModal, useProjectSearchParams } from "./util";
 import { Row } from "components/lib";
+import { Button } from "antd";
 
 
-export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
+export const ProjectListScreen = () => {
     const [params, setParams] = useProjectSearchParams()
+    const { open } = useProjectModal()
     const debouncedParams = useDebounce(params, 200)
     const { data: list, isLoading: isListLoading, retry } = useProjects(debouncedParams)
     const { data: directors, isLoading: isDirectorLoading } = useDirectors()
@@ -20,15 +22,17 @@ export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
             <Container>
                 <Row between={true} style={{ margin: '1rem 0' }}>
                     <h3>Project List</h3>
-                    {props.projectButton}
+                    <Button onClick={() => open()}
+                    >
+                        Create Project
+                    </Button>
                 </Row>
                 <SearchPanel params={params} setParams={setParams} directors={directors || []} />
                 <List refresh={retry}
                     isLoading={isListLoading || isDirectorLoading}
                     list={list || []}
-                    directors={directors || []} 
-                    projectButton={props.projectButton}
-                    />
+                    directors={directors || []}
+                />
             </Container>
         </div>
     )
