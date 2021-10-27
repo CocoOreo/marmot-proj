@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ProjectListScreen } from 'screens/project-list';
 import { ProjectScreen } from 'screens/project';
 import { ReactComponent as SoftwareLogo } from 'assets/logo.svg';
 import styled from '@emotion/styled'
-import { ButtonWithNoPadding, Row } from 'components/lib';
+import { Row } from 'components/lib';
 import { Button, Dropdown, Menu } from 'antd';
 import { useAuth } from 'context/auth-context';
 import { Routes, Navigate, Route } from 'react-router';
@@ -13,38 +13,25 @@ import { ProjectModal } from 'screens/project-list/project-modal';
 import { ProjectPopover } from 'components/project-popover';
 
 export const AuthenticatedApp = () => {
-    const [projectModalOpen, setProjectModalOpen] = useState(false)
     return (
         <div>
             <Container>
-                {/* <Button onClick={()=> setProjectModalOpen(true)}>Open </Button> */}
-                <PageHeader
-                    projectButton={
-                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>
-                            Create Project
-                        </ButtonWithNoPadding>
-                    }
-                />
-                <Main>
-                    <Router>
+                <Router>
+                    {/* <Button onClick={()=> setProjectModalOpen(true)}>Open </Button> */}
+                    <PageHeader />
+                    <Main>
                         <Routes>
                             <Route path={'/projects'}
-                                element={<ProjectListScreen
-                                    projectButton={
-                                        <ButtonWithNoPadding type={'link'} onClick={() => setProjectModalOpen(true)}>
-                                            Create Project
-                                        </ButtonWithNoPadding>
-                                    }
-                                />}>
+                                element={<ProjectListScreen />}>
                             </Route>
                             <Route path={'/projects/:projectId/*'}
                                 element={<ProjectScreen />}>
                             </Route>
                             <Navigate to={"/projects"} />
                         </Routes>
-                    </Router>
-                </Main>
-                <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)}></ProjectModal>
+                    </Main>
+                    <ProjectModal></ProjectModal>
+                </Router>
             </Container>
         </div>
     )
@@ -67,7 +54,7 @@ const HeaderLeft = styled(Row)`
 const HeaderRight = styled.div`
     
 `
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
     return (
         <Header between={true}>
             <HeaderLeft gap={true} between={true}>
@@ -77,7 +64,7 @@ const PageHeader = (props: { projectButton: JSX.Element }) => {
                         Marmot
                     </h3>
                 </Button>
-                <ProjectPopover {...props} />
+                <ProjectPopover />
                 <span>User</span>
             </HeaderLeft>
             <HeaderRight>
