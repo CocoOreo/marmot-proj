@@ -4,7 +4,7 @@ import { useUrlQueryParam } from "utils/url"
 export const useProjectSearchParams = () => {
     const [params, setParams] = useUrlQueryParam(['name', 'personId'])
     return [
-        useMemo(() => ({ ...params, personId: Number(params.personId) || undefined }), [params]),
+        useMemo(() => ({ ...params, name: String(params.name) || undefined, personId: Number(params.personId) || undefined }), [params]),
         setParams
     ] as const
 }
