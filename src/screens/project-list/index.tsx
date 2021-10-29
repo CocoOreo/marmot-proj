@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { useProjects } from "utils/project";
 import { useDirectors } from "utils/director";
 import { useProjectModal, useProjectSearchParams } from "./util";
-import { Row } from "components/lib";
+import { ErrorBox, Row } from "components/lib";
 import { Button } from "antd";
 
 
@@ -14,9 +14,8 @@ export const ProjectListScreen = () => {
     const [params, setParams] = useProjectSearchParams()
     const { open } = useProjectModal()
     const debouncedParams = useDebounce(params, 200)
-    const { data: list, isLoading: isListLoading, retry } = useProjects(debouncedParams)
+    const { data: list, isLoading: isListLoading, error } = useProjects(debouncedParams)
     const { data: directors, isLoading: isDirectorLoading } = useDirectors()
-
     return (
         <div>
             <Container>
@@ -28,7 +27,11 @@ export const ProjectListScreen = () => {
                     </Button>
                 </Row>
                 <SearchPanel params={params} setParams={setParams} directors={directors || []} />
-                <List refresh={retry}
+                {
+                    error ? (
+                        <ErrorBox error={error} />
+                    ) : null}
+                <List
                     isLoading={isListLoading || isDirectorLoading}
                     list={list || []}
                     directors={directors || []}

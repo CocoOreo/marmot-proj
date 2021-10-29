@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Alert, Button, Spin } from 'antd';
+import { Alert, Button, Spin, Typography } from 'antd';
 import React from "react";
 
 const FullPage = styled.div`
@@ -25,6 +25,18 @@ export const FullPageLoading = () => {
     )
 }
 
+// Type Guard
+export const isError = (value:any): value is Error => {
+    return value?.message
+}
+
+export const ErrorBox = ({error}: {error:unknown}) => {
+    if(isError(error)){
+        return <Typography.Text type={'danger'}>{error?.message}</Typography.Text>
+    }
+    return null
+}
+
 export const Row = styled.div<{
     gap?: number | boolean;
     between?: boolean;
@@ -41,7 +53,9 @@ export const Row = styled.div<{
         margin-right: ${props => typeof props.gap === 'number' ? props.gap + 'rem' : props.gap ? '2rem' : undefined};
     }
 `
+
 export const ButtonWithNoPadding = styled(Button)`
     padding: 0;
 `
+
 

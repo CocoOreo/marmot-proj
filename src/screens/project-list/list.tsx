@@ -16,10 +16,10 @@ interface ListProps {
     refresh?: () => void;
 }
 
-export const List: React.FC<ListProps> = ({ list, directors, isLoading, refresh}) => {
+export const List: React.FC<ListProps> = ({ list, directors, isLoading}) => {
     const { mutate } = useEditProject()
     const { open } = useProjectModal() 
-    const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin }).then(refresh)
+    const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin })
     return (
         <Table loading={isLoading}
             pagination={false}

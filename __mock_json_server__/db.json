@@ -24,7 +24,7 @@
       "personId": 1,
       "organization": "Order Organization",
       "created": 1604989757139,
-      "pin": true
+      "pin": false
     },
     {
       "id": 2,
@@ -40,7 +40,7 @@
       "personId": 2,
       "organization": "Material Organzation",
       "created": 1546300800000,
-      "pin": true
+      "pin": false
     },
     {
       "id": 4,
