@@ -1,9 +1,10 @@
 import { useMemo } from "react"
-import { useSearchParams } from "react-router-dom"
+import { URLSearchParamsInit, useSearchParams } from "react-router-dom"
 import { cleanObject } from "utils"
 
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
-    const [searchParams, setSearchParam] = useSearchParams()
+    const [searchParams] = useSearchParams()
+    const setSearchParams = useSetUrlSearchParam();
     return [
         useMemo(
             () => keys.reduce((prev, key) => {
@@ -16,8 +17,18 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
         )
         ,
         (params: Partial<{ [key in K]: unknown }>) => {
-            const res = cleanObject({ ...Object.fromEntries(searchParams), ...params }) as unknown as URLSearchParams
-            return setSearchParam(res)
+            return setSearchParams(params)
         }
     ] as const // To tell the ts, it's not an array, but a tuple
 }
+
+export const useSetUrlSearchParam = () => {
+    const [searchParams, setSearchParam] = useSearchParams();
+    return (params: { [key in string]: unknown }) => {
+      const o = cleanObject({
+        ...Object.fromEntries(searchParams),
+        ...params,
+      }) as URLSearchParamsInit;
+      return setSearchParam(o);
+    };
+  };

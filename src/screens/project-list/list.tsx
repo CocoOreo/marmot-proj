@@ -18,8 +18,9 @@ interface ListProps {
 
 export const List: React.FC<ListProps> = ({ list, directors, isLoading}) => {
     const { mutate } = useEditProject()
-    const { open } = useProjectModal() 
+    const { startEdit } = useProjectModal()
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin })
+    const editProject = (id: number) => startEdit(id)
     return (
         <Table loading={isLoading}
             pagination={false}
@@ -76,12 +77,15 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading}) => {
                     }
                 },
                 {
-                    render() {
+                    render(value, project) {
                         return (
                             <Dropdown overlay={
                                 <Menu>
                                     <Menu.Item>
-                                        <ButtonWithNoPadding onClick={()=> open()} type={'link'}>Edit</ButtonWithNoPadding>
+                                        <ButtonWithNoPadding onClick={()=> editProject(project.id)} type={'link'}>Edit</ButtonWithNoPadding>
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                        <ButtonWithNoPadding type={'link'}>Delete</ButtonWithNoPadding>
                                     </Menu.Item>
                                 </Menu>
                             }>

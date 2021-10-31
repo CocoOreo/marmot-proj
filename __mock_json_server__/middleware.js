@@ -8,10 +8,6 @@ module.exports = (req, res, next) => {
                     username:'jack'
                 }
             })
-        } else {
-            return  res.status('400').json({
-                message:"Wrong username or password"
-            })
         }
     }
     next()
