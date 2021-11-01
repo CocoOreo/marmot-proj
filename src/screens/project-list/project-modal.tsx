@@ -4,14 +4,14 @@ import { DirectorSelect } from "components/director-select"
 import { ErrorBox } from "components/lib"
 import React, { useEffect } from "react"
 import { useAddProject, useEditProject } from "utils/project"
-import { useProjectModal } from "./util"
+import { useProjectModal, useProjectsQueryKey } from "./util"
 
 export const ProjectModal = () => {
     const { projectModalOpen, editingProject, isLoading, close } = useProjectModal()
     const title = editingProject ? 'Edit Project' : 'Create Project'
 
     const useMutateProject = editingProject ? useEditProject : useAddProject
-    const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject()
+    const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject(useProjectsQueryKey())
     const [form] = useForm()
     const onFinish = (values: any) => {
         mutateAsync({ ...editingProject, ...values }).then(() => {

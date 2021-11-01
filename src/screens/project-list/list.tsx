@@ -1,4 +1,4 @@
-import { Dropdown, Menu, Table } from "antd"
+import { Dropdown, Menu, Modal, Table } from "antd"
 import { ButtonWithNoPadding } from "components/lib"
 import { Pin } from "components/pin"
 import dayjs from "dayjs"
@@ -6,8 +6,8 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { Director } from "types/director"
 import { Project } from "types/project"
-import { useEditProject } from "utils/project"
-import { useProjectModal } from "./util"
+import { useDeleteProject, useEditProject } from "utils/project"
+import { useProjectModal, useProjectsQueryKey } from "./util"
 
 interface ListProps {
     list: Project[];
@@ -17,10 +17,8 @@ interface ListProps {
 }
 
 export const List: React.FC<ListProps> = ({ list, directors, isLoading}) => {
-    const { mutate } = useEditProject()
-    const { startEdit } = useProjectModal()
+    const { mutate } = useEditProject(useProjectsQueryKey())
     const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin })
-    const editProject = (id: number) => startEdit(id)
     return (
         <Table loading={isLoading}
             pagination={false}
@@ -79,21 +77,40 @@ export const List: React.FC<ListProps> = ({ list, directors, isLoading}) => {
                 {
                     render(value, project) {
                         return (
-                            <Dropdown overlay={
-                                <Menu>
-                                    <Menu.Item>
-                                        <ButtonWithNoPadding onClick={()=> editProject(project.id)} type={'link'}>Edit</ButtonWithNoPadding>
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <ButtonWithNoPadding type={'link'}>Delete</ButtonWithNoPadding>
-                                    </Menu.Item>
-                                </Menu>
-                            }>
-                                <ButtonWithNoPadding type={'link'}>...</ButtonWithNoPadding>
-                            </Dropdown>
+                            <More project={project} />
                         )
                     }
                 }]} dataSource={list}>
         </Table>
+    )
+}
+
+const More = ({project} : {project:Project}) => {
+    const { startEdit } = useProjectModal()
+    const editProject = (id: number) => startEdit(id)
+    const {mutate:deleteProject} = useDeleteProject(useProjectsQueryKey())
+    const confirmDeleteProject = (id: number) => {
+        Modal.confirm({
+            title:"Are you sure you want to DELETE this project?",
+            content:"Click YES to delete",
+            okText:"YES",
+            onOk(){
+                deleteProject({id})
+            }
+        })
+    }
+    return (
+        <Dropdown overlay={
+            <Menu>
+                <Menu.Item key={'edit'}>
+                    <ButtonWithNoPadding onClick={()=> editProject(project.id)} type={'link'}>Edit</ButtonWithNoPadding>
+                </Menu.Item>
+                <Menu.Item key={'delete'}>
+                    <ButtonWithNoPadding onClick={()=> confirmDeleteProject(project.id)} type={'link'}>Delete</ButtonWithNoPadding>
+                </Menu.Item>
+            </Menu>
+        }>
+            <ButtonWithNoPadding type={'link'}>...</ButtonWithNoPadding>
+        </Dropdown>
     )
 }

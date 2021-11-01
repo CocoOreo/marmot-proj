@@ -57,13 +57,6 @@
       "organization": "Order Organzation",
       "created": 1546900800000,
       "pin": true
-    },
-    {
-      "name": "Hello",
-      "organization": "World",
-      "id": 6,
-      "personId": 3,
-      "pin": false
     }
   ],
   "me": {
