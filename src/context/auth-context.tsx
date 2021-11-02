@@ -5,6 +5,7 @@ import { http } from "utils/http";
 import { useMount } from "utils/use-mount";
 import { useAsync } from "utils/use-async";
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
+import { useQueryClient } from "react-query";
 interface AuthForm {
     username: string;
     password: string;
@@ -29,6 +30,7 @@ const bootstrapUser = async () => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const { data: user, setData: setUser, run, error, isError, isIdle, isLoading, } = useAsync<User | null>()
+    const queryClient = useQueryClient()
     const login = (form: AuthForm) => {
         return auth.login(form).then(user => setUser(user))
     }
@@ -36,7 +38,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return auth.register(form).then(user => setUser(user))
     }
     const logout = () => {
-        return auth.logout().then(user => setUser(null))
+        return auth.logout().then(user => {
+            setUser(null)
+            queryClient.clear()
+        })
     }
 
     useMount(() => {
