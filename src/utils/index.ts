@@ -1,5 +1,5 @@
 const isVoid = (value: unknown) => {
-    return value === undefined || value === '' || value === null
+    return value === undefined || value === null || value === ''
 }
 export const cleanObject = (obj: { [key: string]: unknown }) => {
     // [key:string]: unknown

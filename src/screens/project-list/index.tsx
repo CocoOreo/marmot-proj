@@ -21,8 +21,7 @@ export const ProjectListScreen = () => {
             <Container>
                 <Row between={true} style={{ margin: '1rem 0' }}>
                     <h3>Project List</h3>
-                    <Button onClick={() => open()}
-                    >
+                    <Button type={'link'} onClick={() => open()}>
                         Create Project
                     </Button>
                 </Row>
