@@ -59,6 +59,55 @@
       "pin": true
     }
   ],
+  "pannels": [
+    {
+      "id": 1,
+      "name": "Pannel One",
+      "projectId": 1
+    },
+    {
+      "id": 2,
+      "name": "Pannel Two",
+      "projectId": 2
+    },
+    {
+      "id": 3,
+      "name": "Pannel Three",
+      "projectId": 3
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Task One",
+      "processorId": 1,
+      "projectId": 1,
+      "epicId": 1,
+      "pannelId": 1,
+      "typeId": 1,
+      "note": "Task One"
+    },
+    {
+      "id": 2,
+      "name": "Task Two",
+      "processorId": 2,
+      "projectId": 2,
+      "epicId": 2,
+      "pannelId": 2,
+      "typeId": 2,
+      "note": "Task Two"
+    },
+    {
+      "id": 3,
+      "name": "Task Three",
+      "processorId": 3,
+      "projectId": 3,
+      "epicId": 3,
+      "pannelId": 3,
+      "typeId": 3,
+      "note": "Task Three"
+    }
+  ],
   "me": {
     "user": {
       "username": "jack",
