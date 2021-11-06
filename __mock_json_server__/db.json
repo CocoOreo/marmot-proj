@@ -113,5 +113,9 @@
       "username": "jack",
       "token": "123"
     }
-  }
+  },
+  "taskTypes": [
+    {"id":1, "name":"task"},
+    {"id":2, "name":"bug"}
+  ]
 }
