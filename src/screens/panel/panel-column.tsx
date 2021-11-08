@@ -1,5 +1,5 @@
 import React from "react";
-import { Pannel } from "types/pannel";
+import { Panel } from "types/panel";
 import { useTasks } from "utils/task";
 import { useTaskTypes } from "utils/task-type";
 import { useTasksSearchParams } from "./util";
@@ -17,12 +17,12 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
     return <img src={name === 'task' ? taskIcon : bugIcon} alt={name} />
 }
 
-export const PannelColumn = ({ pannel }: { pannel: Pannel }) => {
+export const PanelColumn = ({ panel }: { panel: Panel }) => {
     const { data: allTasks } = useTasks(useTasksSearchParams())
-    const tasks = allTasks?.filter(task => task.pannelId === pannel.id)
+    const tasks = allTasks?.filter(task => task.panelId === panel.id)
     return (
         <Container>
-            <h3>{pannel.name}</h3>
+            <h3>{panel.name}</h3>
             <TasksContainer>
                 {tasks?.map(task => {
                     return (
