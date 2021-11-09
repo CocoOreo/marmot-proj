@@ -74,6 +74,21 @@
       "id": 3,
       "name": "Panel Three",
       "projectId": 3
+    },
+    {
+      "name": "Panel Two",
+      "projectId": 1,
+      "id": 4
+    },
+    {
+      "name": "Pannel Three",
+      "projectId": 1,
+      "id": 5
+    },
+    {
+      "name": "Panel Four",
+      "projectId": 1,
+      "id": 6
     }
   ],
   "tasks": [
@@ -115,7 +130,13 @@
     }
   },
   "taskTypes": [
-    {"id":1, "name":"task"},
-    {"id":2, "name":"bug"}
+    {
+      "id": 1,
+      "name": "task"
+    },
+    {
+      "id": 2,
+      "name": "bug"
+    }
   ]
 }
