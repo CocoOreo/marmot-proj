@@ -16,7 +16,7 @@ export const usePanelSearchParams = () => ({ projectId: useProjectIdInUrl() })
 export const usePanelQueryKey = () => ['panels', usePanelSearchParams()]
 
 export const useTasksSearchParams = () => {
-    const [param,setParam] = useUrlQueryParam([
+    const [param] = useUrlQueryParam([
         'name',
         'typeId',
         'processorId',
