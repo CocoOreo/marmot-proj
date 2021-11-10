@@ -6,7 +6,7 @@ export interface Task {
     projectId: number;
     // Task Group
     epicId: number;
-    pannelId: number;
+    panelId: number;
     // Task or Bug
     typeId: number;
     note: string;

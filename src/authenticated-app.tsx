@@ -92,5 +92,7 @@ const User = () => {
 }
 
 const Main = styled.main`
+    display: flex;
+    overflow: hidden;
     height: calc(100vh - 6rem);
 `;
