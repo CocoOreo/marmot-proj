@@ -2,11 +2,12 @@ import React from "react";
 import { Panel } from "types/panel";
 import { useTasks } from "utils/task";
 import { useTaskTypes } from "utils/task-type";
-import { useTasksSearchParams } from "./util";
+import { useTasksModal, useTasksSearchParams } from "./util";
 import taskIcon from 'assets/task.svg';
 import bugIcon from 'assets/bug.svg';
 import styled from "@emotion/styled";
 import { Card } from "antd";
+import { CreateTask } from "./create-task";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
     const { data: taskTypes } = useTaskTypes()
@@ -17,16 +18,21 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
     return <img src={name === 'task' ? taskIcon : bugIcon} alt={name} />
 }
 
+
 export const PanelColumn = ({ panel }: { panel: Panel }) => {
     const { data: allTasks } = useTasks(useTasksSearchParams())
     const tasks = allTasks?.filter(task => task.panelId === panel.id)
+    const { startEdit } = useTasksModal()
     return (
         <Container>
             <h3>{panel.name}</h3>
             <TasksContainer>
                 {tasks?.map(task => {
                     return (
-                        <Card style={{ marginBottom: '0.5rem' }} key={task.id}>
+                        <Card
+                            onClick={() => startEdit(task.id)}
+                            style={{ marginBottom: '0.5rem' }}
+                            key={task.id}>
                             <div>
                                 {task.name}
                             </div>
@@ -34,6 +40,7 @@ export const PanelColumn = ({ panel }: { panel: Panel }) => {
                         </Card>
                     )
                 })}
+                <CreateTask panelId={panel.id} />
             </TasksContainer>
         </Container>)
 }

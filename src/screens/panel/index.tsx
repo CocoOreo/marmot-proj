@@ -7,6 +7,7 @@ import { useTasks } from "utils/task"
 import { CreatePanel } from "./create-panel"
 import { PanelColumn } from "./panel-column"
 import { SearchPanel } from "./search-panel"
+import { TaskModal } from "./task-modal"
 import { usePanelSearchParams, useProjectInUrl, useTasksSearchParams } from "./util"
 
 export const PanelScreen = () => {
@@ -24,6 +25,7 @@ export const PanelScreen = () => {
                 }
                 <CreatePanel />
             </ColumnContainer>}
+            <TaskModal/>
         </ScreenContainer>
     )
 }

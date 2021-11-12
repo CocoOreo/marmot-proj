@@ -89,6 +89,11 @@
       "name": "Panel Four",
       "projectId": 1,
       "id": 6
+    },
+    {
+      "name": "Pannel 3",
+      "projectId": 2,
+      "id": 7
     }
   ],
   "tasks": [
@@ -99,7 +104,7 @@
       "projectId": 1,
       "epicId": 1,
       "panelId": 1,
-      "typeId": 1,
+      "typeId": 2,
       "note": "Task One"
     },
     {
@@ -121,6 +126,36 @@
       "panelId": 3,
       "typeId": 3,
       "note": "Task Three"
+    },
+    {
+      "projectId": 1,
+      "name": "Task 2",
+      "panelId": 1,
+      "id": 4,
+      "processorId": 1,
+      "typeId": 1
+    },
+    {
+      "projectId": 1,
+      "name": "Task Three",
+      "panelId": 1,
+      "id": 5,
+      "processorId": 1,
+      "typeId": 2
+    },
+    {
+      "projectId": 1,
+      "name": "Hello",
+      "panelId": 1,
+      "id": 6,
+      "processorId": 1,
+      "typeId": 2
+    },
+    {
+      "projectId": 1,
+      "name": "Task Four",
+      "panelId": 1,
+      "id": 7
     }
   ],
   "me": {
