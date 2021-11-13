@@ -8,6 +8,8 @@ import bugIcon from 'assets/bug.svg';
 import styled from "@emotion/styled";
 import { Card } from "antd";
 import { CreateTask } from "./create-task";
+import { Task } from "types/task";
+import { Mark } from "components/mark";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
     const { data: taskTypes } = useTaskTypes()
@@ -18,26 +20,31 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
     return <img src={name === 'task' ? taskIcon : bugIcon} alt={name} />
 }
 
+const TaskCard = ({ task }: { task: Task }) => {
+    const { startEdit } = useTasksModal()
+    const { name: keyword } = useTasksSearchParams()
+    return (
+        <Card
+            onClick={() => startEdit(task.id)}
+            style={{ marginBottom: '0.5rem' }}
+            key={task.id}>
+            <div><Mark keyword={keyword} name={task.name} /></div>
+            <TaskTypeIcon id={task.typeId} />
+        </Card>
+    )
+}
+
 
 export const PanelColumn = ({ panel }: { panel: Panel }) => {
     const { data: allTasks } = useTasks(useTasksSearchParams())
     const tasks = allTasks?.filter(task => task.panelId === panel.id)
-    const { startEdit } = useTasksModal()
     return (
         <Container>
             <h3>{panel.name}</h3>
             <TasksContainer>
-                {tasks?.map(task => {
+                {tasks?.map((task, index) => {
                     return (
-                        <Card
-                            onClick={() => startEdit(task.id)}
-                            style={{ marginBottom: '0.5rem' }}
-                            key={task.id}>
-                            <div>
-                                {task.name}
-                            </div>
-                            <TaskTypeIcon id={task.typeId} />
-                        </Card>
+                        <TaskCard task={task} key={index} />
                     )
                 })}
                 <CreateTask panelId={panel.id} />

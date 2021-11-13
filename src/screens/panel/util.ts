@@ -37,7 +37,7 @@ export const useTasksSearchParams = () => {
     }, [projectId, param, debouncedName])
 }
 
-export const useTasksQueryKey = () => ['panels', useTasksSearchParams()]
+export const useTasksQueryKey = () => ['tasks', useTasksSearchParams()]
 
 export const useTasksModal = () => {
     const [{ editingTaskId }, setEditingTaskId] = useUrlQueryParam(['editingTaskId'])

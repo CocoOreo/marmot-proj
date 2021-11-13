@@ -21,7 +21,7 @@ export const PanelScreen = () => {
             <SearchPanel />
             {isLoading ? <Spin size={"large"} /> : <ColumnContainer>
                 {
-                    panels?.map(panel => <PanelColumn panel={panel} />)
+                    panels?.map((panel,index) => <PanelColumn panel={panel} key={index}/>)
                 }
                 <CreatePanel />
             </ColumnContainer>}
