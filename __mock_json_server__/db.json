@@ -81,16 +81,6 @@
       "id": 4
     },
     {
-      "name": "Pannel Three",
-      "projectId": 1,
-      "id": 5
-    },
-    {
-      "name": "Panel Four",
-      "projectId": 1,
-      "id": 6
-    },
-    {
       "name": "Pannel 3",
       "projectId": 2,
       "id": 7
@@ -142,20 +132,6 @@
       "id": 5,
       "processorId": 1,
       "typeId": 2
-    },
-    {
-      "projectId": 1,
-      "name": "Hello",
-      "panelId": 1,
-      "id": 6,
-      "processorId": 1,
-      "typeId": 2
-    },
-    {
-      "projectId": 1,
-      "name": "Task Four",
-      "panelId": 1,
-      "id": 7
     }
   ],
   "me": {

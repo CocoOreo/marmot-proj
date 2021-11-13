@@ -1,4 +1,4 @@
-import { Card, Input } from "antd"
+import { Button, Card, Input } from "antd"
 import React, { useEffect, useState } from "react"
 import { useAddTask } from "utils/task"
 import { useProjectIdInUrl, useTasksQueryKey } from "./util"
@@ -20,7 +20,7 @@ export const CreateTask = ({ panelId }: { panelId: number }) => {
         }
     }, [inputMode])
     if (!inputMode) {
-        return <div onClick={toggle}>+Create Task</div>
+        return <Button type={'link'} onClick={toggle}>+ Create Task</Button>
     }
     return <Card>
         <Input onBlur={toggle}
