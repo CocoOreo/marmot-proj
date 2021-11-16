@@ -74,6 +74,16 @@
       "id": 3,
       "name": "Panel Three",
       "projectId": 3
+    },
+    {
+      "name": "Panel Two",
+      "projectId": 1,
+      "id": 4
+    },
+    {
+      "name": "Pannel 3",
+      "projectId": 2,
+      "id": 7
     }
   ],
   "tasks": [
@@ -84,7 +94,7 @@
       "projectId": 1,
       "epicId": 1,
       "panelId": 1,
-      "typeId": 1,
+      "typeId": 2,
       "note": "Task One"
     },
     {
@@ -106,6 +116,22 @@
       "panelId": 3,
       "typeId": 3,
       "note": "Task Three"
+    },
+    {
+      "projectId": 1,
+      "name": "Task 2",
+      "panelId": 1,
+      "id": 4,
+      "processorId": 1,
+      "typeId": 1
+    },
+    {
+      "projectId": 1,
+      "name": "Task Three",
+      "panelId": 1,
+      "id": 5,
+      "processorId": 1,
+      "typeId": 2
     }
   ],
   "me": {
@@ -115,7 +141,13 @@
     }
   },
   "taskTypes": [
-    {"id":1, "name":"task"},
-    {"id":2, "name":"bug"}
+    {
+      "id": 1,
+      "name": "task"
+    },
+    {
+      "id": 2,
+      "name": "bug"
+    }
   ]
 }
