@@ -3,7 +3,6 @@ import { DirectorSelect } from "components/director-select";
 import { Row } from "components/lib";
 import { TaskTypeSelect } from "components/task-type-select";
 import React from "react";
-import { useSetUrlSearchParam } from "utils/url";
 import { useTasksSearchParams } from "./util";
 
 export const SearchPanel = () => {

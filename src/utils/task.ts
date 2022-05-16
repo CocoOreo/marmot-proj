@@ -6,9 +6,11 @@ import { useAddConfig, useDeleteConfig, useEditConfig } from "./use-optimistic-o
 
 export const useTasks = (param?: Partial<Task>) => {
     const client = useHttp()
+    const newParam = {...param, name_like:param?.name}
+    delete newParam['name']
     return useQuery<Task[]>(
-        ["tasks", param],
-        () => client("tasks", { data: param })
+        ["tasks", newParam],
+        () => client("tasks", { data: newParam })
     )
 }
 export const useTask = (id?: number) => {
