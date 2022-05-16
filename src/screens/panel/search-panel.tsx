@@ -7,14 +7,13 @@ import { useSetUrlSearchParam } from "utils/url";
 import { useTasksSearchParams } from "./util";
 
 export const SearchPanel = () => {
-    const searchParams = useTasksSearchParams()
-    const setSearchParams = useSetUrlSearchParam()
+    const [searchParams, setSearchParams] = useTasksSearchParams()
     const reset = () => {
         setSearchParams({
             typeId: undefined,
             processorId: undefined,
             tagId: undefined,
-            name: undefined,
+            name: undefined
         })
     }
     return <Row marginBottom={4} gap={true}>

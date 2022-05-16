@@ -12,6 +12,7 @@ import { Task } from "types/task";
 import { Mark } from "components/mark";
 import { useDeletePanel } from "utils/panel";
 import { Row } from "components/lib";
+import { useDebounce } from "utils/use-debounce";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
     const { data: taskTypes } = useTaskTypes()
@@ -24,11 +25,11 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
 
 const TaskCard = ({ task }: { task: Task }) => {
     const { startEdit } = useTasksModal()
-    const { name: keyword } = useTasksSearchParams()
+    const { name: keyword } = useTasksSearchParams()[0]
     return (
-        <Card 
+        <Card
             onClick={() => startEdit(task.id)}
-            style={{ marginBottom: '0.5rem', cursor:'pointer' }}
+            style={{ marginBottom: '0.5rem', cursor: 'pointer' }}
             key={task.id}>
             <div><Mark keyword={keyword} name={task.name} /></div>
             <TaskTypeIcon id={task.typeId} />
@@ -38,7 +39,7 @@ const TaskCard = ({ task }: { task: Task }) => {
 
 
 export const PanelColumn = ({ panel }: { panel: Panel }) => {
-    const { data: allTasks } = useTasks(useTasksSearchParams())
+    const { data: allTasks } = useTasks(useDebounce(useTasksSearchParams()[0], 200))
     const tasks = allTasks?.filter(task => task.panelId === panel.id)
     return (
         <Container>

@@ -13,7 +13,7 @@ import { usePanelSearchParams, useProjectInUrl, useTasksSearchParams } from "./u
 export const PanelScreen = () => {
     const { data: currentProject } = useProjectInUrl()
     const { data: panels, isLoading: panelIsLoading } = usePanel(usePanelSearchParams())
-    const { isLoading: taskIsLoading } = useTasks(useTasksSearchParams())
+    const { isLoading: taskIsLoading } = useTasks(useTasksSearchParams()[0])
     const isLoading = taskIsLoading || panelIsLoading
     return (
         <ScreenContainer>

@@ -1,5 +1,7 @@
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
+
 const isVoid = (value: unknown) => {
-    return value === undefined || value === null || value === ''
+    return value === undefined || value === null || value === "";
 }
 export const cleanObject = (obj: { [key: string]: unknown }) => {
     // [key:string]: unknown
@@ -9,11 +11,10 @@ export const cleanObject = (obj: { [key: string]: unknown }) => {
     // http://localhost:3001/projects?name=&personId=0
     // For example, the name param should be removed if it doesn't have a value
     const result = { ...obj }
-    Object.keys(obj).forEach((key) => {
-        const value = obj[key]
-        if (isVoid(value)) {
-            delete result[key]
-        }
+    Object.keys(result).forEach((key) => {
+            if (isVoid(result[key])) {
+                delete result[key]
+            }
     })
     return result
 }
