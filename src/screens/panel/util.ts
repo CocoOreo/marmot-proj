@@ -18,7 +18,7 @@ export const usePanelSearchParams = () => ({ projectId: useProjectIdInUrl() })
 export const usePanelQueryKey = () => ['panels', usePanelSearchParams()]
 
 export const useTasksSearchParams = () => {
-    const [param] = useUrlQueryParam([
+    const [param, setParam] = useUrlQueryParam([
         'name',
         'typeId',
         'processorId',
@@ -26,7 +26,7 @@ export const useTasksSearchParams = () => {
     ])
     const projectId = useProjectIdInUrl()
     const debouncedName = useDebounce(param.name, 200)
-    return useMemo(() => {
+    return [useMemo(() => {
         return {
             projectId,
             typeId: Number(param.typeId) || undefined,
@@ -34,7 +34,7 @@ export const useTasksSearchParams = () => {
             tagId: Number(param.tagId) || undefined,
             name: debouncedName || undefined,
         }
-    }, [projectId, param, debouncedName])
+    }, [projectId, param, debouncedName]), setParam] as const;
 }
 
 export const useTasksQueryKey = () => ['tasks', useTasksSearchParams()]
