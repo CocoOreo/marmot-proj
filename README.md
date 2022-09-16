@@ -1,3 +1,24 @@
+# marmot-project
+A a Kanban and Project management System based on React and Typescript
+
+## Technique Features
+- [x] Request Management: Server Caching, Optimistic Updates, Request Retry...
+- [x] Global Context: useCOntext
+- [x] Custom Hooks: useAsync, useThrottle, useHttp...
+- [x] Styled Components
+- [x] Mock JSON server
+- [x] ...
+
+
+## Screenshots
+### Recommend Page
+<div>
+  <img width="600" src="https://github.com/CocoOreo/marmot-proj/blob/main/screenshots/%E6%88%AA%E5%B1%8F2022-09-16%2013.06.07.png"/>
+  <img width="600" src="https://github.com/CocoOreo/marmot-proj/blob/main/screenshots/%E6%88%AA%E5%B1%8F2022-09-16%2013.06.25.png" />
+  <img width="600" src="https://github.com/CocoOreo/marmot-proj/blob/main/screenshots/%E6%88%AA%E5%B1%8F2022-09-16%2013.06.35.png" />
+  <img width="600" src="https://github.com/CocoOreo/marmot-proj/blob/main/screenshots/%E6%88%AA%E5%B1%8F2022-09-16%2013.06.51.png" /> 
+</div>
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -5,6 +26,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn json-server`
 
 ### `yarn start`
 
