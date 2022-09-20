@@ -11,7 +11,6 @@ A a Kanban and Project management System based on React and Typescript
 
 
 ## Screenshots
-### Recommend Page
 <div align="center">
   <img width="600" src="https://github.com/CocoOreo/marmot-proj/blob/main/screenshots/%E6%88%AA%E5%B1%8F2022-09-16%2013.06.07.png"/>
   <img width="600" src="https://github.com/CocoOreo/marmot-proj/blob/main/screenshots/%E6%88%AA%E5%B1%8F2022-09-16%2013.06.25.png" />
